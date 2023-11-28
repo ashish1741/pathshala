@@ -1,61 +1,30 @@
-// import Link from "next/link";
-// import React from "react";
-// import { navItem } from "../helpers";
-// import Avatar from "@mui/material/Avatar";
-// import Stack from "@mui/material/Stack";
-// import { deepOrange } from "@mui/material/colors";
-
-// function Navbar() {
-//   return (
-//     <header
-//       className="fixed top-0 left-0 right-0 w-full h-[80px] 
-//     flex bg-gradient-to-br shadow-lg bg-[#0a1823] 
-//     border-b text-gray-300 p-2"
-//     >
-//       <div className=" w-[40%] m-3 p-2">
-//         <Link href="/">
-//           <span
-//             className="text-[24px] 
-//           font-[800]"
-//           >
-//             Pathashala
-//           </span>
-//         </Link>
-//       </div>
-//       <div className="w-[40%] m-3 p-2 flex justify-evenly">
-//         {navItem.map((ele,index) => {
-//           return (
-//             <Link href={ele.url} key={index}>
-//               <span key={index}
-//                 className="text-[18px] font-medium
-//                  active:text-gray-500 list-none"
-//               >
-//                 {ele.name}
-//               </span>
-//             </Link>
-//           );
-//         })}
-//       </div>
-//       <Stack
-//         direction="row"
-//         spacing={2}
-//         className="cursor-pointer m-2 p-2 text-right "
-//       >
-//         <Avatar sx={{ bgcolor: deepOrange[500] }}>N</Avatar>
-//       </Stack>
-//     </header>
-//   );
-// }
-
-// export default Navbar;
-
-
-import React from 'react'
+import React from "react";
+import { navItems } from "../constants/index";
+import { Link } from "react-router-dom";
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
 
 function Header() {
   return (
-    <div>Header</div>
-  )
+    <header className="w-full bg-gradient-to-br p-3 shadow-lg bg-[#0a1823] border-b text-gray-300">
+      <div className="max-w-7xl mx-auto  py-3 flex items-center justify-between">
+        <Link to={"/"}>
+          <span className="text-2xl font-bold">Pathashala</span>
+        </Link>
+        <div className="flex space-x-10">
+          {navItems.map((ele, index) => (
+            <Link to={ele.url} key={index}>
+              <span className="text-lg font-medium">{ele.name}</span>
+            </Link>
+          ))}
+        </div>
+        <Stack spacing={4} direction="row">
+        <Button variant="outlined">Be A Creator</Button>
+        <Button variant="contained">Be A Learner</Button>
+        </Stack>
+      </div>
+    </header>
+  );
 }
 
-export default Header
+export default Header;
