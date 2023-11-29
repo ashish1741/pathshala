@@ -19,6 +19,17 @@ function Course() {
   const [value, setValue] = useState(3);
   const [hover, setHover] = useState(-1);
 
+  const [Filter,setFilter] = useState({
+    level: "beginner",
+    price:500,
+    language:"english",
+    rating:2,
+
+
+  })
+
+
+  // searching the course 
   const handleSearch = (e) => {
     console.log("Called");
     e.preventDefault();
@@ -30,19 +41,16 @@ function Course() {
     setSearchTerm(e.target.value);
   };
 
-  const handleChange = (event) => {
-    setAge(event.target.value);
+  // for filter the course
+
+  const handleChangeFilter = (e) => {
+    e.preventDefault()
+    console.log(Filter);
+
   };
 
-  const radioStyle = {
-    color: "white", // Set the color of the radio button's circle when inactive
-    "&.Mui-checked": {
-      color: "white", // Set the color of the radio button's circle when active
-    },
-    "&.MuiFormControlLabel-label": {
-      color: "white", // Set the color of the label text
-    },
-  };
+
+  
 
   const labels = {
     0.5: "Useless",
@@ -76,21 +84,22 @@ function Course() {
           </button>
         </div>
       </form>
-      <div className="relative top-[10%] flex ">
-        <div className=" h-[70%] bg-[#13232f] mt-3 p-4 ml-8 text-gray-200 rounded-md shadow-2xl  mb-3">
+      <div className="relative  flex ">
+        <div className=" h-[70%] bg-[#13232f] mt-1 p-2  ml-8 text-gray-200 rounded-md shadow-2xl  ">
+          <div className="text-left p-2">
           <FormControl>
             <FormLabel
               id="demo-radio-buttons-group-label"
               className="text-white m-2 center "
             >
-              Level
+              <span className="text-blue-900 font-[500] text-xl">Level</span>
             </FormLabel>
             <hr className="shdaow-xl" />
             <RadioGroup
               aria-labelledby="demo-radio-buttons-group-label"
-              defaultValue="beginner"
+              value={Filter.level}
               name="radio-buttons-group"
-              color={`${radioStyle.color}`}
+              onChange={(event) => setFilter({ ...Filter, level: event.target.value })}
             >
               <FormControlLabel
                 value="beginner"
@@ -111,10 +120,12 @@ function Course() {
               />
             </RadioGroup>
           </FormControl>
+          </div>
 
-          <span className="w-full h-1 p-2"></span>
           <hr className="my-4 mx-2 bg-[#090f20] " />
-          <Box sx={{ minWidth: 120 }}>
+          <div className=" px-2">
+          <span className="text-blue-900 font-[500] text-xl ">Price</span>
+          <Box sx={{ minWidth: 120, marginTop:3 }}>
             <FormControl fullWidth>
               <InputLabel id="demo-simple-select-label" className="font-[800] ">
                 Price
@@ -122,30 +133,37 @@ function Course() {
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value="age"
-                label="Age"
-                onChange={handleChange}
+                label="price"
+                value={Filter.price}
+                onChange={(e) => setFilter({...Filter, price:e.target.value})}
+                style={{ color: 'white' }}
+
               >
-                <MenuItem value={500}>Above 500</MenuItem>
+                <MenuItem  value={500} >Above 500</MenuItem>
                 <MenuItem value={1000}>Above 1000</MenuItem>
                 <MenuItem value={1500}>Above 1500</MenuItem>
                 <MenuItem value={2000}>Above 2000</MenuItem>
               </Select>
             </FormControl>
           </Box>
+          </div>
+
+
           <hr className="my-4 mx-2" />
 
           <FormControl>
             <FormLabel id="demo-row-radio-buttons-group-label">
-              Language
+            <span className="text-blue-900 font-[500] text-xl ">Language</span>
             </FormLabel>
             <RadioGroup
               row
               aria-labelledby="demo-row-radio-buttons-group-label"
               name="row-radio-buttons-group"
+              defaultValue={Filter.language}
+              onChange={(e) => setFilter({...Filter, language: e.target.value})}
             >
               <FormControlLabel
-                value="nepali"
+                value= "nepali"
                 control={<Radio />}
                 label="Nepali"
               />
@@ -158,7 +176,7 @@ function Course() {
           </FormControl>
 
           <hr className="my-4 mx-2" />
-          <span className="text-black font-[300] my-1">Rating</span>
+          <span className="text-blue-900 font-[400] text-xl ">Rating</span>
           <Box
             sx={{
               width: 200,
@@ -168,12 +186,10 @@ function Course() {
           >
             <Rating
               name="hover-feedback"
-              value={value}
+              value={Filter.rating}
               precision={0.5}
               getLabelText={getLabelText}
-              onChange={(event, newValue) => {
-                setValue(newValue);
-              }}
+              onChange={(event, newValue) => setFilter({ ...Filter, rating: newValue })}
               onChangeActive={(event, newHover) => {
                 setHover(newHover);
               }}
@@ -188,7 +204,7 @@ function Course() {
            
            <hr className="my-2" />
            <Stack direction="row" spacing={2}>
-          <Button variant="contained">Filter Now</Button>
+          <Button variant="contained" onClick={handleChangeFilter}>Filter Now</Button>
           <Button variant="outlined">Reset</Button>
            </Stack>
         </div>
